@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { connect } from "./utils/connection.js";
 import User from "./models/User.js";
+import Pool from "./models/Pool.js";
 
 const app = express();
 app.use(cors());
@@ -22,9 +23,30 @@ app.post("/check-user", async (req, res) => {
         username: fullName,
       });
     }
-    return res.send("User checked").status(200);
+    return res.json("User checked").status(200);
   } catch (error) {
-    return res.send(error).status(404);
+    return res.json(error).status(404);
+  }
+});
+
+app.post("/create", async (req, res) => {
+  const { title, description, validity, questions, clerk_id } = await req.body;
+
+  try {
+    const newPool = new Pool({
+      title,
+      description,
+      validity,
+      questions,
+      clerk_id,
+    });
+
+    await newPool.save();
+    res
+      .status(201)
+      .json({ message: "Pool created successfully", pool: newPool });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating pool", error });
   }
 });
 
