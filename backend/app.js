@@ -50,6 +50,23 @@ app.post("/create", async (req, res) => {
   }
 });
 
+app.get("/pools/:clerk_id", async (req, res) => {
+  try {
+    const { clerk_id } = req.params;
+    const user = await User.findOne({ clerk_id });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Assuming you have a Poll model and a relationship between User and Poll
+    const polls = await Pool.find({ clerk_id: clerk_id });
+
+    res.status(200).json(polls);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+});
 app.listen(3000, () => {
   console.log("Server started on PORT 3000");
 });

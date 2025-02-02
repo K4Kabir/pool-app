@@ -111,7 +111,7 @@ const CreatePoolModal = function ({ open, setOpen }: { open: boolean, setOpen: R
                         </div>
                     </DialogHeader>
                     <div className="py-3">
-                        <Button type="button" className="w-full">Add</Button>
+                        <Button type="submit" className="w-full">Add</Button>
                     </div>
                 </form>
             </DialogContent>

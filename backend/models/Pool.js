@@ -16,27 +16,30 @@ const questionSchema = new mongoose.Schema({
   },
 });
 
-const poolSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+const poolSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    validity: {
+      type: String,
+      required: true,
+    },
+    questions: [questionSchema],
+    clerk_id: {
+      type: String,
+      required: true,
+      ref: "User",
+    },
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  validity: {
-    type: String,
-    required: true,
-  },
-  questions: [questionSchema],
-  clerk_id: {
-    type: String,
-    required: true,
-    ref: "User",
-  },
-});
+  { timestamps: true }
+);
 
-const Pool = mongoose.models.Pool || mongoose.model("Pool", poolSchema);
+const Pool = mongoose.models.Pol || mongoose.model("Pool", poolSchema);
 
 export default Pool;

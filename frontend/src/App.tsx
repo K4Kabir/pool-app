@@ -4,6 +4,7 @@ import Header from './components/Header'
 import ProtectedRoute from './auth/ProtectedRoute'
 import { useUser } from '@clerk/clerk-react'
 import Dashboard from './pages/Dashboard'
+import PoolVotingPage from './pages/VotingPage'
 
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
         {
           path: '/',
           element: <h1 className='text-5xl'>Home</h1>
+        },
+        {
+          path: '/:id',
+          element: <PoolVotingPage />
         },
         {
           path: '/dashboard',
