@@ -28,12 +28,11 @@ interface IPoll {
 const PoolVotingPage = () => {
     const [pool, setPool] = useState<IPoll>();
     const { user } = useUser();
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const { id } = useParams()
     const activeUsers = 0
     const viewMode = user?.id === pool?.clerk_id ? true : false
 
-    console.log(viewMode)
     async function getPoll() {
         try {
             let response = await axios.get(`http://localhost:3000/poll/${id}`)
