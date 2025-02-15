@@ -7,6 +7,7 @@ import { Button } from '../components/ui/button';
 import { Plus, Trash2 } from 'lucide-react';
 import CreatePoolModal from "../components/common/CreatePoolModal";
 import { useUser } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
 
 interface IQuestions {
     title: string
@@ -29,6 +30,7 @@ const Dashboard = () => {
     const [open, setOpen] = useState(false);
     const [pools, setPools] = useState<IPools[]>([]);
     const [error, setError] = useState<any>(null);
+    const navigate = useNavigate();
 
     const getPools = async function () {
         try {
@@ -74,7 +76,7 @@ const Dashboard = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {pools?.map((pool: IPools) => (
-                        <Card key={pool._id} className="overflow-hidden transition-all hover:shadow-lg">
+                        <Card onClick={() => navigate(`/${pool._id}`)} key={pool._id} className="overflow-hidden transition-all hover:shadow-lg">
                             <CardHeader className="pb-4">
                                 <div className="flex justify-between items-start">
                                     <div className="space-y-1">

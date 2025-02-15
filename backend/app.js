@@ -67,6 +67,24 @@ app.get("/pools/:clerk_id", async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 });
+
+app.get("/poll/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const poll = await Pool.findById(id);
+
+    if (!poll) {
+      return res.status(404).json({ message: "Poll not found" });
+    }
+
+    const isViewMode = req.body && Object.keys(req.body).length > 0;
+
+    res.status(200).json({ poll, userCanVote: !isViewMode });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server started on PORT 3000");
 });
