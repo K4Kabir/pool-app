@@ -6,11 +6,27 @@ import { useUser } from '@clerk/clerk-react'
 import Dashboard from './pages/Dashboard'
 import PoolVotingPage from './pages/VotingPage'
 
+import axios from 'axios'
+import { useEffect } from 'react'
 
 function App() {
-  const { isSignedIn, isLoaded } = useUser()
-  const router = createBrowserRouter([
+  const { isSignedIn, isLoaded ,user } = useUser()
+  const checkUser = async () => {
+    axios.post('http://localhost:3000/check-user',{
+      clerk_id: user?.id,
+      fullName: user?.fullName  
+    })
+  }
+  useEffect(() => {
+    if (user ){
+      checkUser();
+    }
+  },[user]);
 
+ // console.log(user);
+  
+  const router = createBrowserRouter([
+  
     {
       path: '',
       element: <Header />,
