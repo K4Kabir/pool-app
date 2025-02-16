@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 import { Button } from '../components/ui/button';
 import { Activity, Users, ChevronUp } from 'lucide-react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { data, useParams } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 
 interface IQuestion {
@@ -47,7 +47,12 @@ const PoolVotingPage = () => {
         getPoll()
     }, [])
 
-    const handleVote = (optionId: any) => {
+    const vote = async function () {
+        let response = await axios.put(`http://localhost:3000/vote/${id}`, pool)
+        return response
+    }
+
+    const handleVote = async (optionId: any) => {
         setPool(prevPool => {
             const newOptions = prevPool?.questions?.map(option => {
                 if (option._id === optionId) {
@@ -67,9 +72,8 @@ const PoolVotingPage = () => {
 
             return { ...prevPool, questions: newOptions };
         });
-
-        // Toggle selection
         setSelectedOption(selectedOption === optionId ? null : optionId);
+        await vote()
     };
 
     const getTotalVotes = () => {

@@ -85,6 +85,23 @@ app.get("/poll/:id", async (req, res) => {
   }
 });
 
+app.put("/vote/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedPoll = req.body;
+
+    const poll = await Pool.findByIdAndUpdate(id, updatedPoll, { new: true });
+
+    if (!poll) {
+      return res.status(404).json({ message: "Poll not found" });
+    }
+
+    res.status(200).json({ message: "Poll updated successfully", poll });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server started on PORT 3000");
 });

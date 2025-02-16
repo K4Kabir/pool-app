@@ -36,6 +36,11 @@ const poolSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    votedBy: {
+      type: Array,
+      require: false,
+      default: [],
+    },
   },
   { timestamps: true }
 );
